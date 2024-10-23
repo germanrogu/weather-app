@@ -1,6 +1,6 @@
 import React from "react";
 
-const WeatherItem = ({ date, description, temperature }) => {
+const WeatherItem = ({ current, date, description, temperature }) => {
   const getWeatherIcon = (description) => {
     if (description.includes("cloud")) return "☁️";
     if (description.includes("rain")) return "🌧️";
@@ -18,18 +18,34 @@ const WeatherItem = ({ date, description, temperature }) => {
   };
 
   return (
-    <li className='px-6 py-4 hover:bg-orange-100 transition duration-300 ease-in-out'>
+    <li
+      className={`py-4 transition duration-300 ease-in-out ${
+        current ? "text-white list-none" : "px-6 hover:bg-orange-100"
+      }`}
+    >
       <div className='flex justify-between items-center'>
-        <span className='text-sm font-medium text-orange-800'>{date}</span>
+        <span
+          className={`text-sm font-medium ${
+            current ? "text-white" : "text-orange-800"
+          }`}
+        >
+          {date}
+        </span>
         <div className='flex items-center space-x-2'>
           <span className='text-2xl' aria-hidden='true'>
             {getWeatherIcon(description)}
           </span>
-          <span className='text-sm text-orange-600'>{description}</span>
           <span
-            className={`text-sm font-bold ${getTemperatureColor(temperature)}`}
+            className={`text-sm ${current ? "text-white" : "text-orange-600"}`}
           >
-            {Math.round(temperature)}°C
+            {description}
+          </span>
+          <span
+            className={`text-sm font-bold ${getTemperatureColor(temperature)} ${
+              current ? "text-white" : ""
+            }`}
+          >
+            {temperature}
           </span>
         </div>
       </div>
