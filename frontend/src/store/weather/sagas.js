@@ -6,11 +6,35 @@ import { FETCH_WEATHER_REQUEST } from "./types";
 function* fetchWeather(action) {
   const { city, countryCode } = action.payload;
   try {
-    const response = yield call(
+    const currentWeatherResponse = yield call(
       axios.get,
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city},${countryCode}&appid=${process.env.REACT_APP_API_KEY_OPEN_WEATHER}`
+      `${process.env.REACT_APP_BACKEND_URL}/weather/current`,
+      {
+        params: {
+          city,
+          country_code: countryCode,
+        },
+      }
     );
-    yield put(fetchWeatherSuccess(response.data));
+
+    const forecastResponse = yield call(
+      axios.get,
+      `${process.env.REACT_APP_BACKEND_URL}/weather/forecast`,
+      {
+        params: {
+          city,
+          country_code: countryCode,
+          days: 5,
+        },
+      }
+    );
+
+    const combinedData = {
+      current: currentWeatherResponse.data,
+      forecast: forecastResponse.data,
+    };
+
+    yield put(fetchWeatherSuccess(combinedData));
   } catch (error) {
     yield put(fetchWeatherFailure(error.message));
   }
