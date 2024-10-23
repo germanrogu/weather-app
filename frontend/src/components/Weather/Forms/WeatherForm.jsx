@@ -26,7 +26,7 @@ const WeatherForm = ({ onSubmit }) => {
           placeholder='Country Code'
           value={countryCode}
           onChange={(e) => setCountryCode(e.target.value)}
-          className='w-full sm:w-40 px-4 py-2 bg-orange-50 border border-orange-200 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300 transition duration-300 ease-in-out placeholder-orange-600 text-orange-800'
+          className='w-full px-4 py-2 bg-orange-50 border border-orange-200 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300 transition duration-300 ease-in-out placeholder-orange-600 text-orange-800'
         />
       </div>
       <button
